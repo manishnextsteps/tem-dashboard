@@ -12,8 +12,8 @@ export default function DashboardChart(props: IProps) {
     const { data, dataLoadingError, currentDate } = useContext(CentralContext)
     const dataBydate = data.filter(e => e.Date === currentDate)
     console.log('dataBydate', dataBydate)
-
-    const coloursForDemandSeries = dataBydate.map((e: SingleUnit) => {
+    //03A9F4
+    let coloursForDemandSeries = dataBydate.map((e: SingleUnit) => {
         if (e.demand === '2') {
             return '#F50000' //red
         }
@@ -30,6 +30,12 @@ export default function DashboardChart(props: IProps) {
                 click: (event: any, chartContext: any, config: any) => {
                     console.log(config.dataPointIndex)
                     changeDataIndex(config.dataPointIndex)
+                    // coloursForDemandSeries.map((e:any,i:number)=>{
+                    //     if(i===config.dataPointIndex){
+                    //         console.log(i)
+                    //         e='#03A9F4'
+                    //     }
+                    // })
                 }
             },
             height: 150,

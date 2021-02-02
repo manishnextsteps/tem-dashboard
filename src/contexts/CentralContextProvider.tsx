@@ -17,7 +17,7 @@ interface UserContextInterface {
   data: SingleUnit[];
   dataLoadingError: boolean;
   currentDate: string;
-  changeCurrentDate: (newDate: string) => void;
+  changeCurrentDate: (newDate: string|undefined) => void;
   allDates: string[];
   // UserDataRefetchingInContext: () => void;
 }
@@ -74,8 +74,8 @@ const CentralContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
     })
   }, [])
 
-  const changeCurrentDate = (newDate: string) => {
-    setCurrentDate(newDate)
+  const changeCurrentDate = (newDate: string|undefined) => {
+    newDate && setCurrentDate(newDate)
   }
   console.log('data', data, 'alldates', allDates)
   return (

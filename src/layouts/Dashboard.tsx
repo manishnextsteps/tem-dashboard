@@ -11,9 +11,6 @@ export default function Dashboard() {
     if (dataLoadingError) { return <h1>Error in fetching Data</h1> }
     return (
         <Grid container style={{ padding: "25px"}}>
-            <Grid item xs={12} style={{ marginBottom: "25px"}}>
-                <DateSelector />
-            </Grid>
             <Grid item xs={12}>
                 <Container/>
             </Grid>
