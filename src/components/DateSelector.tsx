@@ -12,33 +12,45 @@ import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date';
 export default function DateSelector() {
     const { data, currentDate, changeCurrentDate, allDates } = useContext(CentralContext)
     // console.log('alldates', allDates, 'currentDate',currentDate)
-    console.log('currentDate',currentDate)
+    const GBtoUSdateStringConverter=(dateString:string)=>{
+        const dateArray = dateString.split("/");
+        var dateObject = new Date(+dateArray[2], +dateArray[1]-1, +dateArray[0]);
+        // console.log('DateStringToGBConverter',dateString,dateObject.toLocaleDateString('en-US'))
+        return dateObject.toLocaleDateString('en-US')
+    }
     const changeHandler = (date: MaterialUiPickersDate) => {
         // console.log('NewDate',date)
-        changeCurrentDate(date?.toLocaleDateString('en-US',{year:'numeric',month:'2-digit',day:'2-digit'}))
+        changeCurrentDate(date?.toLocaleDateString('en-GB'))
     }
     return (
         <Grid
             container
             alignItems='center'
             justify="center"
-        // style={{borderBottom:"1px solid gray"}}
         >
-            <Grid item xs={4}>
+            <Grid item xs={5}>
                 Select Date
             </Grid>
             <Grid item xs={6}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
+                    <KeyboardDatePicker
                         disableToolbar
                         variant="inline"
                         format="MM/dd/yyyy"
                         margin="normal"
                         id="date-picker-inline"
                         // label="Date picker inline"
-                        value={currentDate}
+                        value={GBtoUSdateStringConverter(currentDate)}
                         // shouldDisableDate={(date:)}
                         onChange={changeHandler}
+                        shouldDisableDate={(day:MaterialUiPickersDate)=>{
+                            if(day && allDates.includes(day?.toLocaleDateString('en-GB'))){
+                                return false
+                            }
+                            else{
+                                return true
+                            }
+                        }}
                         // KeyboardButtonProps={{
                         //     'aria-label': 'change date',
                         // }}
